@@ -1,34 +1,45 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.ozsoft.texasholdem</groupId>
-    <artifactId>TexasHoldEm</artifactId>
-    <version>0.5</version>
+    <groupId>org.dsaw</groupId>
+    <artifactId>poker-engine</artifactId>
+    <version>0.1</version>
     <packaging>jar</packaging>
 
-    <name>TexasHoldEm</name>
-    <description>Texas Hold'em poker game</description>
+    <name>Poker Engine</name>
     <inceptionYear>2009</inceptionYear>
+
     <licenses>
         <license>
             <name>Apache License 2.0</name>
+            <!--TODO repo-->
             <distribution>manual</distribution>
+            <url>https://raw.github.com/bubuntux/poker-engine/master/doc/LICENSE.txt</url>
         </license>
     </licenses>
-    <developers>
-        <developer>
-            <name>Oscar Stigter</name>
-            <email>oscar.stigter@gmail.com</email>
-        </developer>
-    </developers>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.6</java.version>
+        <java.version>1.7</java.version>
+        <!--TODO change to test-ng-->
         <junit.version>4.8</junit.version>
     </properties>
+
+    <developers>
+        <developer>
+            <name>Julio Gutierrez</name>
+            <email>bubuntux@gmail.com</email>
+            <timezone>-6</timezone>
+        </developer>
+        <developer>
+            <name>Oscar Stigter</name>
+            <email>oscar.stigter@gmail.com</email>
+            <roles>
+                <role>Author</role>
+            </roles>
+        </developer>
+    </developers>
 
     <dependencies>
         <dependency>
@@ -45,7 +56,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.4</version>
+                <version>3.1</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -58,7 +69,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>org.ozsoft.texasholdem.gui.Main</mainClass>
+                            <mainClass>org.dsaw.poker.engine.gui.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
