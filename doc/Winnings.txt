@@ -1,0 +1,80 @@
+Poker winnings (pot division)
+=============================
+
+Player  Cash    Action      Bet     Pot
+A       10      SB (5)      10      5: {A} (Total: 5)
+B       20      BB (10)     10      5: {A, B}, 5: {B} (Total: 15)
+C       40      C  (10)     10      5: {A, B, C}, 5: {B, C} (Total: 25)
+D       80      C  (10)     10      5: {A, B, C, D}, 5: {B, C, D} (Total: 35)
+A        5      C  (5) *    10      5: {A, B, C, D}, 5: {A, B, C, D} (Total: 40)
+B       10      -           10      5: {A, B, C, D}, 5: {A, B, C, D} (Total: 40)
+C       30      B 10        10      5: {A, B, C, D}, 5: {A, B, C, D}, 10: {C} (Total: 50)
+D       70      R 10        20      5: {A, B, C, D}, 5: {A, B, C, D}, 10: {C, D}, 10: {D} (Total: 70)
+A        -      -           20      5: {A, B, C, D}, 5: {A, B, C, D}, 10: {C, D}, 10: {D} (Total: 70)
+B       10      C (10) *    20      5: {A, B, C, D}, 5: {A, B, C, D}, 10: {B, C, D}, 10: {D} (Total: 80)
+C       20      C (10)      20      5: {A, B, C, D}, 5: {A, B, C, D}, 10: {B, C, D}, 10: {C, D} (Total: 90)
+D       50      -           20      5: {A, B, C, D}, 5: {A, B, C, D}, 10: {B, C, D}, 10: {C, D} (Total: 90)
+* Ranking: A, B, C, D:
+  * A receives 40 (20 + 20)
+  * B receives 30
+  * C receives 20  
+* Ranking: C, A, B, D:
+  * C receives 90
+* Ranking: D, A, B, C
+  * D receives 90
+* Ranking: A/B, C, D
+  * A receives 20 (20/2 + 20/2)
+  * B receives 70 (20/2 + 20/2 + 30 + 20)
+* Ranking: A/C, B/D
+  * A receives 20 (20/2 + 20/2)
+  * C receives 70 (20/2 + 20/2 + 30 + 20)
+* Ranking: B/D, A, C
+  * B receives 35 (20/2 + 20/2 + 30/2)
+  * D receives 55 (20/2 + 20/2 + 30/2 + 20)
+
+Player  Cash    Action      Bet     Pot
+A        10     SB (5)      10      5: {A} (Total: 5)
+B       100     BB (10)     10      5: {A, B}, 5: {B} (Total: 15)
+C        20     C  (10)     10      5: {A, B, C}, 5: {B, C} (Total: 25)
+A         5     C  (5)  *   10      5: {A, B, C}, 5: {A, B, C} (Total: 30)
+B        90     B  90   *   90      5: {A, B, C}, 5: {A, B, C}, 90: {B} (Total: 120)
+C        10     C (10)  *   90      5: {A, B, C}, 5: {A, B, C}, 10: {B, C}, 80: {B} (Total: 130)
+* Ranking A, B, C:
+  * A receives 30  (15 + 15)
+  * B receives 100 (20 + 80)
+* Ranking B, A, C:
+  * B receives 130 (15 + 15 + 20 + 80)
+* Ranking A, C, D:
+  * A receives 30 (15 + 15)
+  * C receives 20
+  * D receives 80
+* Ranking C, A, D:
+  * C receives 50 (15 + 15 + 20)
+  * D receives 80
+
+Player  Cash    Action      Bet     Pot
+A       100     B 100  *    100     100: {A} (Total: 100)
+B        10     C (10) *    100     10: {A, B}, 90: {A} (Total: 110)      
+C        50     C (50) *    100     10: {A, B, C}, 40: {A, C}, 50: {A} (Total: 160)
+* Ranking A, B, C:
+  * A receives 160 (30 + 80 + 50)
+* Ranking B, C, A:
+  * B receives 30
+  * C receives 80
+  * A receives 50
+* Ranking C, B, A:
+  * C receives 110 (30 + 80)
+  * A receives 50
+* Ranking A/B, C:
+  * A receives 145 (30/2 + 80 + 50)
+  * B receives 15 (30/2)
+* Ranking A/C, B:
+  * A receives 105 (30/2 + 80/2 + 50)
+  * C receives  55 (30/2  80/2)
+* Ranking B/C, A:
+  * B receives  15 (30/2)
+  * C receives 145 (30/2 + 80 + 50)
+* Ranking A/B/C:
+  * A receives 100 (30/3 + 80/2 + 50)
+  * B receives  10 (30/3)
+  * C receives  50 (30/3 + 80/2)

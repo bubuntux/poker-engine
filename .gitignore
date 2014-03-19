@@ -1,0 +1,12 @@
+*.class
+target/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# IDE #
+.idea
+*.iml
+.settings

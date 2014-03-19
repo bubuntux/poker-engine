@@ -1,0 +1,88 @@
+Client/Server design
+====================
+
+
+Request table info
+-----------------
+
+Request (client):
+
+<message xmlns="http://www.ozsoft.org/texasholdem">
+    <requestTableInfo />
+</message>
+
+Response (server):
+
+<message xmlns="http://www.ozsoft.org/texasholdem">
+    <tableInfo>
+        <bigBlind>2</bigBlind>
+        <players>
+            <player>
+                <name>Joe</name>
+                <cash>99</cash>
+                <bet>1</bet>
+                <action>
+                    <smallBlind amount="1" />
+                </action>
+            </player>
+            <player>
+                <name>Mike</name>
+                <cash>98</cash>
+                <bet>2</bet>
+                <action>
+                    <bigBlind amount="2" />
+                </action>
+            </player>
+            <player>
+                <name>Eddie</name>
+                <cash>98</cash>
+                <bet>2</bet>
+                <action />
+            </player>
+        </players>
+        <board>
+            <card>7h</card>
+            <card>As</card>
+            <card>Qd</card>
+        </board>
+        <dealer>Eddie</dealer>
+        <playerInTurn>Eddie</playerInTurn>
+    </tableInfo>
+</message>
+
+
+Table update
+------------
+
+Message (client):
+
+<message xmlns="http://www.ozsoft.org/texasholdem">
+    <playerAction>
+        <player>Joe</player>
+        <bet amount="2" />
+    </playerAction>
+</message>
+
+
+Message types
+-------------
+
+requestTableInfo
+    tableInfo
+tableUpdate
+join
+leave
+requestAction
+playerAction
+
+
+Actions
+-------
+
+<smallBlind />
+<bigBlind />
+<fold />
+<check />
+<call />
+<bet amount="2" />
+<raise amount="4" />

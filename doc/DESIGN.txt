@@ -1,0 +1,180 @@
+Design
+======
+
+Fixed Limit Texas Hold'em poker
+
+Big blind:   Any even size
+Small blind: Half of big blind
+
+Fixed bets/raises:
+- Pre-Flop and Flop: 1x big blind
+- Turn/River:        2x big blind
+
+Phases:
+- Pre-Flop: Hole cards (2 per player), betting round
+- Flop:     3 cards on the board,      betting round
+- Turn:     1 extra card on the board, betting round
+- River:    1 extra card on the board, betting round
+- Showdown
+
+Actions:
+- bet == 0: Check, Bet,   Fold
+- bet > 0:  Call,  Raise, Fold
+- all-in:   Call
+
+Bet/Raise: All other players must act again (Call, Raise, Fold), bet/raised player has the final option (Call, Raise, Fold)
+
+Max. raises per betting round: 4, except when only 2 players left (Heads-up mode)
+
+All-in:
+- If a player uses all of his remaining cash to call (partially or full), he goes all-in.
+- All-in player must stay in hand until showdown, without acting.
+- At the showdown, each active player is processed, in order of the best hand to worst:
+  if he is NOT all-in, he wins the pot (done), otherwise (all-in) he wins his pot share (next player). 
+
+
+Hand phases
+-----------
+
+- Rotate the dealer position
+- Post the Small Blind and Big Blind
+- Deal the 2 Hole cards per player
+- Pre-Flop betting round
+- Deal the 3 Flop cards on the board
+- Flop betting round
+- Deal the Turn card on the board
+- Turn betting round
+- Deal the River card on the board
+- River betting round
+- Showdown
+
+
+Action types
+------------
+
+enum Action {
+	CHECK
+	CALL
+	BET
+	RAISE
+	FOLD
+}
+
+
+Classes
+-------
+
+class Deck {
+	-cards : Card[]
+	+shuffle()
+	+deal() : Card
+	+deal(int noOfCards) : Card[]
+	+deal(int rank, int suit) : Card
+	+reset()
+}
+
+class Card {
+    -rank : int
+    -suit : int
+    +Card(int rank, int suit)
+    +Card(String s)
+    +getRank() : int
+    +getSuit() : int
+}
+
+class Hand {
+    -cards : Card[]
+    -noOfCards : int
+    +Hand()
+    +getNoOfCards() : int
+    +addCard(card : Card)
+    +addCards(cards : Card[])
+    +addCards(cards : Collection<Card>)
+    +clear()
+}
+
+class Server {
+    -tables : List<Table>
+    +Server(noOfTables : int)
+    +start()
+    +stop()
+    +createAccount(String username, String password)
+    +login(String username, String password)
+    +logout(String username)
+    +buyChips(String username, int amount)
+    +joinTable(String username, int tableNumber)
+    +leaveTable(String username)
+}
+
+class Account {
+    -username : String
+    -password : String
+    -chips : int
+}
+
+class Table {
+    -bigBlind : int
+    -players : Map<String, Player>
+    -activePlayers : Map<String, Player>
+    -deck : Deck
+    -board : List<Card>
+    -bet : int
+    -pot : int
+    +Table(bigBlind : int)
+    +start()
+    +stop()
+    +addPlayer(Player player)
+    +removePlayer(Player player)
+}
+
+class Player {
+    -name : String
+    -position : int
+    -cash : int
+    -client : Client
+    -isDealer : boolean
+    -isActor : boolean
+    -cards : Card[]  // Confidential, only set when appropriate!
+    -bet : int
+    -action : Action
+    -raises : int
+    +Player(String name, int cash, Client client)
+}
+
+interface Client {
+    +joinedTable(int tableNumber, int bigBlind, List<Player> players, int position)
+    +leftTable()
+    +playerJoined(Player player)
+    +playerLeft(Player player)
+    +dealerRotated(Player dealer)
+    +actorRotated(Player actor)
+    +dealPocketCards(Card[] cards)
+    +boardUpdated(List<Card> cards)
+    +playerActed(Player player)
+    +act(Set<Action> allowedActions) : Action
+}
+
+
+Bot algorithm
+-------------
+
+Factors:
+- hole cards (Chen formula)
+- community cards
+  - potential duplicates (more than One Pair)
+  - potential straight
+  - potential flush
+- number of players
+- table position
+- bet
+- pot
+- cash
+- chance to win
+- actions from earlier table positions
+- bluffing
+- opponent behavior
+  - bet
+  - cash
+  - tightness (loose/tight)
+  - aggression (passive/aggressive)
+  - bluffing

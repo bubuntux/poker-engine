@@ -1,0 +1,8 @@
+TODO
+====
+
+* Determine the cards that form the best combination
+* Improve the hand descriptions
+* Heads Up bot arena
+* Table log (replayable) with GUI panel
+* Network game (client/server)

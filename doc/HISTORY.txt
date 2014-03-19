@@ -1,0 +1,37 @@
+HISTORY
+=======
+
+Release     Date            Description
+---------------------------------------------------------------------------------------------------
+
+0.5a        16-May-2013     - Added No-Limit game engine
+                            - Updated GUI with No-Limit game engine
+                            - Implemented basic bot AI
+                            - General code cleanup
+                            - Added README.txt file
+
+0.4a        17-Apr-2013     - Implemented pot splitting
+                            - Implemented all-in and broke players
+                            - Finished GUI game engine (Fixed Limit poker)
+                            - Improved poker engine (rule compliancy)
+                            - Implemented Heads Up (head-to-head) mode
+                            - General code cleanup
+                            - Divide odd chips from the pot
+                            - Added HISTORY.txt file
+
+0.3a        11-Nov-2011     - Implemented pot division (including side pots)
+                            - Fixed more bugs in hand evaluator
+                            - Fixed bugs in game engine
+                            - Fixed GUI updates
+                            - Added Apache License 2.0 file and headers
+
+0.2a        16-Jun-2011     Fixed more bugs in hand evaluator
+
+0.1a        02-Jun-2011     - First official alpha release!
+                            - Console game with 1 player against 3 dumb bots
+                            - Swing GUI game variant
+                            - Fixed many bugs in hand evaluator
+                            - Added many unit tests
+                            - Added TODO.txt file
+                             
+-           19-Aug-2009     Initial project import from incubator.
