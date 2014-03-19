@@ -14,7 +14,7 @@ the game engine, the project also offers a Swing GUI and bots.
 This project is provided under the Apache License 2.0.
 
 
-Status
+Status [![Build Status](https://travis-ci.org/bubuntux/poker-engine.png?branch=master)](https://travis-ci.org/bubuntux/poker-engine)
 ------
 
 The current implementation support the Fixed-Limit and No-Limit variants of the game with a Swing
