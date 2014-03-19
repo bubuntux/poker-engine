@@ -17,16 +17,10 @@
 
 package org.dsaw.poker.engine.gui;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import javax.swing.*;
+import java.awt.*;
+import java.math.BigInteger;
 import java.util.List;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 import org.dsaw.poker.engine.Card;
 
 /**
@@ -171,8 +165,8 @@ public class BoardPanel extends JPanel {
         add(controlPanel, gc);
         
         setPreferredSize(new Dimension(400, 270));
-        
-        update(null, 0, 0);
+
+        update(null, BigInteger.ZERO, BigInteger.ZERO);
     }
     
     /**
@@ -183,13 +177,13 @@ public class BoardPanel extends JPanel {
      * @param pot
      *            The pot.
      */
-    public void update(List<Card> cards, int bet, int pot) {
-        if (bet == 0) {
+    public void update(List<Card> cards, BigInteger bet, BigInteger pot) {
+        if (BigInteger.ZERO.equals(bet)) {
             betLabel.setText(" ");
         } else {
             betLabel.setText("$ " + bet);
         }
-        if (pot == 0) {
+        if (BigInteger.ZERO.equals(pot)) {
             potLabel.setText(" ");
         } else {
             potLabel.setText("$ " + pot);

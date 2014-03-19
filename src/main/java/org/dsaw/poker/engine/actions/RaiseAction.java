@@ -17,6 +17,8 @@
 
 package org.dsaw.poker.engine.actions;
 
+import java.math.BigInteger;
+
 /**
  * The action of raising a previous bet.
  * 
@@ -30,7 +32,7 @@ public class RaiseAction extends Action {
      * @param amount
      *            The amount to raise with.
      */
-    public RaiseAction(int amount) {
+    public RaiseAction(BigInteger amount) {
         super("Raise", "raises", amount);
     }
     

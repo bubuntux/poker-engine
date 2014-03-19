@@ -34,6 +34,7 @@
 
 package org.dsaw.poker.engine;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -65,8 +66,8 @@ public class Table {
     private final TableType tableType;
     
     /** The size of the big blind. */
-    private final int bigBlind;
-    
+    private final BigInteger bigBlind;
+
     /** The players at the table. */
     private final List<Player> players;
     
@@ -92,11 +93,11 @@ public class Table {
     private Player actor;
 
     /** The minimum bet in the current hand. */
-    private int minBet;
-    
+    private BigInteger minBet;
+
     /** The current bet in the current hand. */
-    private int bet;
-    
+    private BigInteger bet;
+
     /** All pots in the current hand (main pot and any side pots). */
     private final List<Pot> pots;
     
@@ -112,7 +113,7 @@ public class Table {
      * @param bigBlind
      *            The size of the big blind.
      */
-    public Table(TableType type, int bigBlind) {
+    public Table(TableType type, BigInteger bigBlind) {
         this.tableType = type;
         this.bigBlind = bigBlind;
         players = new ArrayList<>();
@@ -144,7 +145,7 @@ public class Table {
         while (true) {
             int noOfActivePlayers = 0;
             for (Player player : players) {
-                if (player.getCash() >= bigBlind) {
+                if (player.getCash().compareTo(bigBlind) >= 0) {
                     noOfActivePlayers++;
                 }
             }
@@ -158,7 +159,7 @@ public class Table {
         // Game over.
         board.clear();
         pots.clear();
-        bet = 0;
+        bet = BigInteger.ZERO;
         notifyBoardUpdated();
         for (Player player : players) {
             player.resetHand();
@@ -189,26 +190,26 @@ public class Table {
         
         // Flop.
         if (activePlayers.size() > 1) {
-            bet = 0;
+            bet = BigInteger.ZERO;
             dealCommunityCards("Flop", 3);
             doBettingRound();
 
             // Turn.
             if (activePlayers.size() > 1) {
-                bet = 0;
+                bet = BigInteger.ZERO;
                 dealCommunityCards("Turn", 1);
-                minBet = 2 * bigBlind;
+                minBet = bigBlind.add(bigBlind);
                 doBettingRound();
 
                 // River.
                 if (activePlayers.size() > 1) {
-                    bet = 0;
+                    bet = BigInteger.ZERO;
                     dealCommunityCards("River", 1);
                     doBettingRound();
 
                     // Showdown.
                     if (activePlayers.size() > 1) {
-                        bet = 0;
+                        bet = BigInteger.ZERO;
                         doShowdown();
                     }
                 }
@@ -230,7 +231,7 @@ public class Table {
         for (Player player : players) {
             player.resetHand();
             // Player must be able to afford at least the big blind.
-            if (player.getCash() >= bigBlind) {
+            if (player.getCash().compareTo(bigBlind) >= 0) {
                 activePlayers.add(player);
             }
         }
@@ -273,7 +274,7 @@ public class Table {
      * Posts the small blind.
      */
     private void postSmallBlind() {
-        final int smallBlind = bigBlind / 2;
+        final BigInteger smallBlind = bigBlind.divide(BigInteger.valueOf(2)); //TODO
         actor.postSmallBlind(smallBlind);
         contributePot(smallBlind);
         notifyBoardUpdated();
@@ -331,7 +332,7 @@ public class Table {
         } else {
             // Otherwise, player left of dealer starts, no initial bet.
             actorPosition = dealerPosition;
-            bet = 0;
+            bet = BigInteger.ZERO;
         }
         
         if (playersToAct == 2) {
@@ -366,16 +367,16 @@ public class Table {
                 if (action == Action.CHECK) {
                     // Do nothing.
                 } else if (action == Action.CALL) {
-                    int betIncrement = bet - actor.getBet();
-                    if (betIncrement > actor.getCash()) {
+                    BigInteger betIncrement = bet.subtract(actor.getBet());
+                    if (betIncrement.compareTo(actor.getCash()) > 0) {
                         betIncrement = actor.getCash();
                     }
                     actor.payCash(betIncrement);
-                    actor.setBet(actor.getBet() + betIncrement);
+                    actor.setBet(actor.getBet().add(betIncrement));
                     contributePot(betIncrement);
                 } else if (action instanceof BetAction) {
-                    int amount = (tableType == TableType.FIXED_LIMIT) ? minBet : action.getAmount();
-                    if (amount < minBet && amount < actor.getCash()) {
+                    BigInteger amount = (tableType == TableType.FIXED_LIMIT) ? minBet : action.getAmount();
+                    if (amount.compareTo(minBet) < 0 && amount.compareTo(actor.getCash()) < 0) {
                         throw new IllegalStateException("Illegal client action: bet less than minimum bet!");
                     }
                     actor.setBet(amount);
@@ -386,14 +387,14 @@ public class Table {
                     lastBettor = actor;
                     playersToAct = activePlayers.size();
                 } else if (action instanceof RaiseAction) {
-                    int amount = (tableType == TableType.FIXED_LIMIT) ? minBet : action.getAmount();
-                    if (amount < minBet && amount < actor.getCash()) {
+                    BigInteger amount = (tableType == TableType.FIXED_LIMIT) ? minBet : action.getAmount();
+                    if (amount.compareTo(minBet) < 0 && amount.compareTo(actor.getCash()) < 0) {
                         throw new IllegalStateException("Illegal client action: raise less than minimum bet!");
                     }
-                    bet += amount;
+                    bet = bet.add(amount);
                     minBet = amount;
-                    int betIncrement = bet - actor.getBet();
-                    if (betIncrement > actor.getCash()) {
+                    BigInteger betIncrement = bet.subtract(actor.getBet());
+                    if (betIncrement.compareTo(actor.getCash()) > 0) {
                         betIncrement = actor.getCash();
                     }
                     actor.setBet(bet);
@@ -417,7 +418,7 @@ public class Table {
                         notifyBoardUpdated();
                         notifyPlayerActed();
                         Player winner = activePlayers.get(0);
-                        int amount = getTotalPot();
+                        BigInteger amount = getTotalPot();
                         winner.win(amount);
                         notifyBoardUpdated();
                         notifyMessage("%s wins $ %d.", winner, amount);
@@ -456,14 +457,14 @@ public class Table {
         if (player.isAllIn()) {
             actions.add(Action.CHECK);
         } else {
-            int actorBet = actor.getBet();
-            if (bet == 0) {
+            BigInteger actorBet = actor.getBet();
+            if (bet.equals(BigInteger.ZERO)) {
                 actions.add(Action.CHECK);
                 if (tableType == TableType.NO_LIMIT || raises < MAX_RAISES || activePlayers.size() == 2) {
                     actions.add(Action.BET);
                 }
             } else {
-                if (actorBet < bet) {
+                if (actorBet.compareTo(bet) < 0) {
                     actions.add(Action.CALL);
                     if (tableType == TableType.NO_LIMIT || raises < MAX_RAISES || activePlayers.size() == 2) {
                         actions.add(Action.RAISE);
@@ -486,25 +487,25 @@ public class Table {
      * @param amount
      *            The amount to contribute.
      */
-    private void contributePot(int amount) {
+    private void contributePot(BigInteger amount) {
         for (Pot pot : pots) {
             if (!pot.hasContributer(actor)) {
-                int potBet = pot.getBet();
-                if (amount >= potBet) {
+                BigInteger potBet = pot.getBet();
+                if (amount.compareTo(potBet) >= 0) {
                     // Regular call, bet or raise.
                     pot.addContributer(actor);
-                    amount -= pot.getBet();
+                    amount = amount.subtract(pot.getBet());
                 } else {
                     // Partial call (all-in); redistribute pots.
                     pots.add(pot.split(actor, amount));
-                    amount = 0;
+                    amount = BigInteger.ZERO;
                 }
             }
-            if (amount <= 0) {
+            if (amount.compareTo(BigInteger.ZERO) <= 0) {
                 break;
             }
         }
-        if (amount > 0) {
+        if (amount.compareTo(BigInteger.ZERO) > 0) {
             Pot pot = new Pot(amount);
             pot.addContributer(actor);
             pots.add(pot);
@@ -612,8 +613,8 @@ public class Table {
         }
 
         // Per rank (single or multiple winners), calculate pot distribution.
-        int totalPot = getTotalPot();
-        Map<Player, Integer> potDivision = new HashMap<>();
+        BigInteger totalPot = getTotalPot();
+        Map<Player, BigInteger> potDivision = new HashMap<>();
         for (HandValue handValue : rankedPlayers.keySet()) {
             List<Player> winners = rankedPlayers.get(handValue);
             for (Pot pot : pots) {
@@ -626,12 +627,12 @@ public class Table {
                 }
                 if (noOfWinnersInPot > 0) {
                     // Divide pot over winners.
-                    int potShare = pot.getValue() / noOfWinnersInPot;
+                    BigInteger potShare = pot.getValue().divide(new BigInteger(String.valueOf(noOfWinnersInPot))); //TODO
                     for (Player winner : winners) {
                         if (pot.hasContributer(winner)) {
-                            Integer oldShare = potDivision.get(winner);
+                            BigInteger oldShare = potDivision.get(winner);
                             if (oldShare != null) {
-                                potDivision.put(winner, oldShare + potShare);
+                                potDivision.put(winner, oldShare.add(potShare));
                             } else {
                                 potDivision.put(winner, potShare);
                             }
@@ -639,18 +640,18 @@ public class Table {
                         }
                     }
                     // Determine if we have any odd chips left in the pot.
-                    int oddChips = pot.getValue() % noOfWinnersInPot;
-                    if (oddChips > 0) {
+                    BigInteger oddChips = pot.getValue().mod(new BigInteger(String.valueOf(noOfWinnersInPot))); //TODO
+                    if (oddChips.compareTo(BigInteger.ZERO) > 0) {
                         // Divide odd chips over winners, starting left of the dealer.
                         pos = dealerPosition;
-                        while (oddChips > 0) {
+                        while (oddChips.compareTo(BigInteger.ZERO) > 0) {
                             pos = (pos + 1) % activePlayers.size();
                             Player winner = activePlayers.get(pos);
-                            Integer oldShare = potDivision.get(winner);
+                            BigInteger oldShare = potDivision.get(winner);
                             if (oldShare != null) {
-                                potDivision.put(winner, oldShare + 1);
+                                potDivision.put(winner, oldShare.add(BigInteger.ONE));
 //                                System.out.format("[DEBUG] %s receives an odd chip from the pot.\n", winner);
-                                oddChips--;
+                                oddChips = oddChips.subtract(BigInteger.ONE);
                             }
                         }
                         
@@ -662,11 +663,11 @@ public class Table {
         
         // Divide winnings.
         StringBuilder winnerText = new StringBuilder();
-        int totalWon = 0;
+        BigInteger totalWon = BigInteger.ZERO;
         for (Player winner : potDivision.keySet()) {
-            int potShare = potDivision.get(winner);
+            BigInteger potShare = potDivision.get(winner);
             winner.win(potShare);
-            totalWon += potShare;
+            totalWon = totalWon.add(potShare);
             if (winnerText.length() > 0) {
                 winnerText.append(", ");
             }
@@ -677,7 +678,7 @@ public class Table {
         notifyMessage(winnerText.toString());
         
         // Sanity check.
-        if (totalWon != totalPot) {
+        if (!totalWon.equals(totalPot)) {
             throw new IllegalStateException("Incorrect pot division!");
         }
     }
@@ -701,7 +702,7 @@ public class Table {
      * Notifies clients that the board has been updated.
      */
     private void notifyBoardUpdated() {
-        int pot = getTotalPot();
+        BigInteger pot = getTotalPot();
         for (Player player : players) {
             player.getClient().boardUpdated(board, bet, pot);
         }
@@ -712,10 +713,10 @@ public class Table {
      * 
      * @return The total pot size.
      */
-    private int getTotalPot() {
-        int totalPot = 0;
+    private BigInteger getTotalPot() {
+        BigInteger totalPot = BigInteger.ZERO;
         for (Pot pot : pots) {
-            totalPot += pot.getValue();
+            totalPot = totalPot.add(pot.getValue());
         }
         return totalPot;
     }

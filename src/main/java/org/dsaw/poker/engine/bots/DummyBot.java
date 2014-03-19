@@ -17,6 +17,7 @@
 
 package org.dsaw.poker.engine.bots;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Set;
 
@@ -43,7 +44,7 @@ public class DummyBot extends Bot {
 
     /** {@inheritDoc} */
     @Override
-    public void joinedTable(TableType type, int bigBlind, List<Player> players) {
+    public void joinedTable(TableType type, BigInteger bigBlind, List<Player> players) {
         // Not implemented.
     }
 
@@ -67,7 +68,7 @@ public class DummyBot extends Bot {
 
     /** {@inheritDoc} */
     @Override
-    public void boardUpdated(List<Card> cards, int bet, int pot) {
+    public void boardUpdated(List<Card> cards, BigInteger bet, BigInteger pot) {
         // Not implemented.
     }
 
@@ -79,7 +80,7 @@ public class DummyBot extends Bot {
 
     /** {@inheritDoc} */
     @Override
-    public Action act(int minBet, int currentBet, Set<Action> allowedActions) {
+    public Action act(BigInteger minBet, BigInteger currentBet, Set<Action> allowedActions) {
         if (allowedActions.contains(Action.CHECK)) {
             return Action.CHECK;
         } else {

@@ -17,17 +17,14 @@
 
 package org.dsaw.poker.engine.gui;
 
-import java.awt.Component;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import javax.swing.*;
+import java.awt.*;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.swing.JFrame;
-
 import org.dsaw.poker.engine.Card;
 import org.dsaw.poker.engine.Client;
 import org.dsaw.poker.engine.Player;
@@ -52,11 +49,11 @@ public class Main extends JFrame implements Client {
     private static final TableType TABLE_TYPE = TableType.NO_LIMIT;
 
     /** The size of the big blind. */
-    private static final int BIG_BLIND = 10;
-    
+    private static final BigInteger BIG_BLIND = BigInteger.valueOf(10);
+
     /** The starting cash per player. */
-    private static final int STARTING_CASH = 500;
-    
+    private static final BigInteger STARTING_CASH = BigInteger.valueOf(500);
+
     /** The table. */
     private final Table table;
     
@@ -161,7 +158,7 @@ public class Main extends JFrame implements Client {
     }
 
     @Override
-    public void joinedTable(TableType type, int bigBlind, List<Player> players) {
+    public void joinedTable(TableType type, BigInteger bigBlind, List<Player> players) {
         for (Player player : players) {
             PlayerPanel playerPanel = playerPanels.get(player.getName());
             if (playerPanel != null) {
@@ -191,7 +188,7 @@ public class Main extends JFrame implements Client {
     }
 
     @Override
-    public void boardUpdated(List<Card> cards, int bet, int pot) {
+    public void boardUpdated(List<Card> cards, BigInteger bet, BigInteger pot) {
         boardPanel.update(cards, bet, pot);
     }
 
@@ -223,7 +220,7 @@ public class Main extends JFrame implements Client {
     }
 
     @Override
-    public Action act(int minBet, int currentBet, Set<Action> allowedActions) {
+    public Action act(BigInteger minBet, BigInteger currentBet, Set<Action> allowedActions) {
         boardPanel.setMessage("Please select an action:");
         return controlPanel.getUserInput(minBet, humanPlayer.getCash(), allowedActions);
     }

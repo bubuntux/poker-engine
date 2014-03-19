@@ -17,6 +17,8 @@
 
 package org.dsaw.poker.engine.actions;
 
+import java.math.BigInteger;
+
 /**
  * Player action.
  * 
@@ -28,7 +30,7 @@ public abstract class Action {
     public static final Action ALL_IN = new AllInAction();
 
     /** Bet. */
-    public static final Action BET = new BetAction(0);
+    public static final Action BET = new BetAction(BigInteger.ZERO);
     
     /** Posting the big blind. */
     public static final Action BIG_BLIND = new BigBlindAction();
@@ -46,7 +48,7 @@ public abstract class Action {
     public static final Action FOLD = new FoldAction();
     
     /** Raise. */
-    public static final Action RAISE = new RaiseAction(0);
+    public static final Action RAISE = new RaiseAction(BigInteger.ZERO);
     
     /** Posting the small blind. */
     public static final Action SMALL_BLIND = new SmallBlindAction();
@@ -58,8 +60,8 @@ public abstract class Action {
     private final String verb;
     
     /** The amount (if appropriate). */
-    private final int amount;
-    
+    private final BigInteger amount;
+
     /**
      * Constructor.
      * 
@@ -69,7 +71,7 @@ public abstract class Action {
      *            The action's verb.
      */
     public Action(String name, String verb) {
-        this(name, verb, 0);
+        this(name, verb, BigInteger.ZERO);
     }
     
     /**
@@ -82,7 +84,7 @@ public abstract class Action {
      * @param amount
      *            The action's amount.
      */
-    public Action(String name, String verb, int amount) {
+    public Action(String name, String verb, BigInteger amount) {
         this.name = name;
         this.verb = verb;
         this.amount = amount;
@@ -111,7 +113,7 @@ public abstract class Action {
      * 
      * @return The action's amount.
      */
-    public final int getAmount() {
+    public final BigInteger getAmount() {
         return amount;
     }
     

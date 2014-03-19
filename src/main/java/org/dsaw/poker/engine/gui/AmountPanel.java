@@ -17,20 +17,14 @@
 
 package org.dsaw.poker.engine.gui;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.HashMap;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.math.BigInteger;
+import java.util.HashMap;
 import org.dsaw.poker.engine.actions.Action;
 
 /**
@@ -59,8 +53,8 @@ public class AmountPanel extends JPanel implements ChangeListener, ActionListene
     private final JButton cancelButton;
     
     /** Incremental bet amounts mapped to slider's index. */
-    private final HashMap<Integer, Integer> sliderAmounts;
-    
+    private final HashMap<Integer, BigInteger> sliderAmounts;
+
     /** Monitor while waiting for user input. */
     private final Object monitor = new Object();
     
@@ -74,9 +68,9 @@ public class AmountPanel extends JPanel implements ChangeListener, ActionListene
      */
     public AmountPanel() {
         setBackground(UIConstants.TABLE_COLOR);
-        
-        sliderAmounts = new HashMap<Integer, Integer>();
-        
+
+        sliderAmounts = new HashMap<Integer, BigInteger>();
+
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         
@@ -150,7 +144,7 @@ public class AmountPanel extends JPanel implements ChangeListener, ActionListene
      * 
      * @return The selected action.
      */
-    public Action show(Action defaultAction, int minBet, int maxBet) {
+    public Action show(Action defaultAction, BigInteger minBet, BigInteger maxBet) {
         this.defaultAction = defaultAction;
         betRaiseButton.setText(defaultAction.getName());
         selectedAction = null;
@@ -158,11 +152,11 @@ public class AmountPanel extends JPanel implements ChangeListener, ActionListene
         // Determine incremental amounts on slider bar.
         sliderAmounts.clear();
         int noOfValues = 0;
-        int value = minBet;
-        while (value < maxBet && noOfValues < (NO_OF_TICKS - 1)) {
+        BigInteger value = minBet;
+        while (value.compareTo(maxBet) < 0 && noOfValues < (NO_OF_TICKS - 1)) {
             sliderAmounts.put(noOfValues, value);
             noOfValues++;
-            value *= 2;
+            value = value.add(value);
         }
         sliderAmounts.put(noOfValues, maxBet);
         amountSlider.setMinimum(0);
@@ -186,7 +180,7 @@ public class AmountPanel extends JPanel implements ChangeListener, ActionListene
      * 
      * @return The selected amount.
      */
-    public int getAmount() {
+    public BigInteger getAmount() {
         int index = amountSlider.getValue();
         return sliderAmounts.get(index);
     }
@@ -195,7 +189,7 @@ public class AmountPanel extends JPanel implements ChangeListener, ActionListene
     @Override
     public void stateChanged(ChangeEvent e) {
         int index = amountSlider.getValue();
-        int amount = sliderAmounts.get(index);
+        BigInteger amount = sliderAmounts.get(index);
         amountLabel.setText(String.format("$ %d", amount));
     }
 

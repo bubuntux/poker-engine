@@ -17,17 +17,11 @@
 
 package org.dsaw.poker.engine.gui;
 
-import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-
-import javax.swing.Icon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-
+import java.awt.*;
+import java.math.BigInteger;
 import org.dsaw.poker.engine.Card;
 import org.dsaw.poker.engine.Player;
 import org.dsaw.poker.engine.actions.Action;
@@ -175,8 +169,8 @@ public class PlayerPanel extends JPanel {
     public void update(Player player) {
         nameLabel.setText(player.getName());
         cashLabel.setText("$ " + player.getCash());
-        int bet = player.getBet();
-        if (bet == 0) {
+        BigInteger bet = player.getBet();
+        if (bet.equals(BigInteger.ZERO)) {
             betLabel.setText(" ");
         } else {
             betLabel.setText("$ " + bet);
