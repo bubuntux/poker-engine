@@ -95,7 +95,7 @@ public class ControlPanel extends JPanel implements ActionListener {
                 repaint();
             }
         });
-        Set<Action> allowedActions = new HashSet<Action>();
+        Set<Action> allowedActions = new HashSet<>();
         allowedActions.add(Action.CONTINUE);
         getUserInput(BigInteger.ZERO, BigInteger.ZERO, allowedActions);
     }

@@ -143,9 +143,7 @@ public class Hand {
             // Could not insert anywhere, so append at the end.
             cards[noOfCards++] = card;
         } else {
-            for (int i = noOfCards; i > insertIndex; i--) {
-                cards[i] = cards[i - 1];
-            }
+            System.arraycopy(cards, insertIndex, cards, insertIndex + 1, noOfCards - insertIndex);
             cards[insertIndex] = card;
             noOfCards++;
         }

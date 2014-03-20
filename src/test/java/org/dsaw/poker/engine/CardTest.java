@@ -18,8 +18,6 @@
 package org.dsaw.poker.engine;
 
 import junit.framework.Assert;
-
-import org.dsaw.poker.engine.Card;
 import org.junit.Test;
 
 /**
@@ -51,12 +49,9 @@ public class CardTest {
      */
     @Test
     public void testConstructors() {
-        @SuppressWarnings("unused")
-        Card card = null;
-        
         // Numeric rank too low.
         try {
-            card = new Card(-1, 0);
+             new Card(-1, 0);
             Assert.fail("No exception thrown");
         } catch (IllegalArgumentException e) {
             // OK.
@@ -64,7 +59,7 @@ public class CardTest {
 
         // Numeric rank too high.
         try {
-            card = new Card(Card.NO_OF_RANKS, 0);
+             new Card(Card.NO_OF_RANKS, 0);
             Assert.fail("No exception thrown");
         } catch (IllegalArgumentException e) {
             // OK.
@@ -72,7 +67,7 @@ public class CardTest {
 
         // Numeric suit too low.
         try {
-            card = new Card(0, -1);
+             new Card(0, -1);
             Assert.fail("No exception thrown");
         } catch (IllegalArgumentException e) {
             // OK.
@@ -80,7 +75,7 @@ public class CardTest {
         
         // Numeric suit too high.
         try {
-            card = new Card(0, Card.NO_OF_SUITS);
+             new Card(0, Card.NO_OF_SUITS);
             Assert.fail("No exception thrown");
         } catch (IllegalArgumentException e) {
             // OK.
@@ -88,7 +83,7 @@ public class CardTest {
         
         // Null string.
         try {
-            card = new Card(null);
+             new Card(null);
             Assert.fail("No exception thrown");
         } catch (IllegalArgumentException e) {
             // OK.
@@ -96,7 +91,7 @@ public class CardTest {
         
         // Empty string.
         try {
-            card = new Card("");
+             new Card("");
             Assert.fail("No exception thrown");
         } catch (IllegalArgumentException e) {
             // OK.
@@ -104,7 +99,7 @@ public class CardTest {
         
         // String too short.
         try {
-            card = new Card("A");
+             new Card("A");
             Assert.fail("No exception thrown");
         } catch (IllegalArgumentException e) {
             // OK.
@@ -112,7 +107,7 @@ public class CardTest {
         
         // String too long.
         try {
-            card = new Card("Ahx");
+             new Card("Ahx");
             Assert.fail("No exception thrown");
         } catch (IllegalArgumentException e) {
             // OK.
@@ -120,7 +115,7 @@ public class CardTest {
         
         // Unknown rank character.
         try {
-            card = new Card("xh");
+             new Card("xh");
             Assert.fail("No exception thrown");
         } catch (IllegalArgumentException e) {
             // OK.
@@ -128,7 +123,7 @@ public class CardTest {
         
         // Unknown rank character.
         try {
-            card = new Card("xh");
+             new Card("xh");
             Assert.fail("No exception thrown");
         } catch (IllegalArgumentException e) {
             // OK.
@@ -136,7 +131,7 @@ public class CardTest {
         
         // Unknown suit character.
         try {
-            card = new Card("Ax");
+           new Card("Ax");
             Assert.fail("No exception thrown");
         } catch (IllegalArgumentException e) {
             // OK.

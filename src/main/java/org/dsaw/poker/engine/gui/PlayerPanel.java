@@ -243,10 +243,8 @@ public class PlayerPanel extends JPanel {
         public MyLabel() {
             setBorder(UIConstants.LABEL_BORDER);
             setForeground(UIConstants.TEXT_COLOR);
-            setHorizontalAlignment(JLabel.HORIZONTAL);
+            setHorizontalAlignment(SwingConstants.CENTER);
             setText(" ");
         }
-        
-    } // MyLabel
-    
+    }
 }

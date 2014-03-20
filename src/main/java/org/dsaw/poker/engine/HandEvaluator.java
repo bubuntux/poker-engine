@@ -412,11 +412,11 @@ public class HandEvaluator {
             rankings[0] = type.getValue();
             rankings[1] = quadRank;
             // Get the remaining card as kicker.
-            int index = 2;
+            int index = 3; //TODO WTF?
             for (Card card : cards) {
                 int rank = card.getRank();
                 if (rank != quadRank) {
-                    rankings[index++] = rank;
+                    rankings[index] = rank;
                     break;
                 }
             }

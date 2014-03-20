@@ -18,10 +18,6 @@
 package org.dsaw.poker.engine;
 
 import junit.framework.Assert;
-
-import org.dsaw.poker.engine.Hand;
-import org.dsaw.poker.engine.HandEvaluator;
-import org.dsaw.poker.engine.HandValueType;
 import org.junit.Test;
 
 /**
@@ -36,7 +32,7 @@ public class HandEvaluatorTest {
      */
     @Test
     public void highCard() {
-        HandEvaluator evaluator = null;
+        HandEvaluator evaluator;
         int value1, value2;
         
         // Base hand.
@@ -74,7 +70,7 @@ public class HandEvaluatorTest {
      */
     @Test
     public void onePair() {
-        HandEvaluator evaluator = null;
+        HandEvaluator evaluator;
         int value1, value2;
         
         // Base hand.
@@ -112,7 +108,7 @@ public class HandEvaluatorTest {
      */
     @Test
     public void twoPairs() {
-        HandEvaluator evaluator = null;
+        HandEvaluator evaluator;
         int value1, value2;
 
         // Base hand.
@@ -150,7 +146,7 @@ public class HandEvaluatorTest {
      */
     @Test
     public void threeOfAKind() {
-        HandEvaluator evaluator = null;
+        HandEvaluator evaluator;
         int value1, value2;
         
         // Base hand.
@@ -188,7 +184,7 @@ public class HandEvaluatorTest {
      */
     @Test
     public void straight() {
-        HandEvaluator evaluator = null;
+        HandEvaluator evaluator;
         int value1, value2;
         
         // Base hand.
@@ -230,7 +226,7 @@ public class HandEvaluatorTest {
      */
     @Test
     public void flush() {
-        HandEvaluator evaluator = null;
+        HandEvaluator evaluator;
         int value1, value2;
         
         // Base hand.
@@ -274,7 +270,7 @@ public class HandEvaluatorTest {
      */
     @Test
     public void fullHouse() {
-        HandEvaluator evaluator = null;
+        HandEvaluator evaluator;
         int value1, value2;
         
         // Base hand.
@@ -312,7 +308,7 @@ public class HandEvaluatorTest {
      */
     @Test
     public void fourOfAKind() {
-        HandEvaluator evaluator = null;
+        HandEvaluator evaluator;
         int value1, value2;
         
         // Base hand.
@@ -344,7 +340,7 @@ public class HandEvaluatorTest {
      */
     @Test
     public void straightFlush() {
-        HandEvaluator evaluator = null;
+        HandEvaluator evaluator;
         int value1, value2;
         
         // Base hand.
@@ -382,7 +378,7 @@ public class HandEvaluatorTest {
      */
     @Test
     public void royalFlush() {
-        HandEvaluator evaluator = null;
+        HandEvaluator evaluator;
         int value1, value2;
         
         // Base hand.

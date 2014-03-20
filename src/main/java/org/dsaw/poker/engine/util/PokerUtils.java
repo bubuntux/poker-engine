@@ -51,7 +51,7 @@ public abstract class PokerUtils {
         boolean isPair = (rank1 == rank2);
         boolean isSuited = (suit1 == suit2);
         
-        double score = 0.0;
+        double score;
         
         // 1. Base score highest rank only
         if (highRank == Card.ACE) {

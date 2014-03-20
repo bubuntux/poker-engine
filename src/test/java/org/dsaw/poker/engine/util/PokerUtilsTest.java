@@ -34,8 +34,8 @@ public class PokerUtilsTest {
      */
     @Test
     public void chenFormula() {
-        Card card1 = null;
-        Card card2 = null;
+        Card card1;
+        Card card2;
         
         card1 = new Card(Card.ACE, Card.SPADES);
         card2 = new Card(Card.ACE, Card.HEARTS);

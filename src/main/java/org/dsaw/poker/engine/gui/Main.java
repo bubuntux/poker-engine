@@ -54,12 +54,6 @@ public class Main extends JFrame implements Client {
     /** The starting cash per player. */
     private static final BigInteger STARTING_CASH = BigInteger.valueOf(500);
 
-    /** The table. */
-    private final Table table;
-    
-    /** The players at the table. */
-    private final Map<String, Player> players;
-    
     /** The GridBagConstraints. */
     private final GridBagConstraints gc;
     
@@ -86,8 +80,8 @@ public class Main extends JFrame implements Client {
      */
     public Main() {
         super("Texas Hold'em poker");
-        
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setBackground(UIConstants.TABLE_COLOR);
         setLayout(new GridBagLayout());
 
@@ -98,19 +92,21 @@ public class Main extends JFrame implements Client {
         boardPanel = new BoardPanel(controlPanel);        
         addComponent(boardPanel, 1, 1, 1, 1);
         
-        players = new LinkedHashMap<String, Player>();
+        /* The players at the table. */
+        Map<String, Player> players = new LinkedHashMap<>();
         humanPlayer = new Player("Player", STARTING_CASH, this);
         players.put("Player", humanPlayer);
-        players.put("Joe",    new Player("Joe",   STARTING_CASH, new BasicBot(0, 75)));
-        players.put("Mike",   new Player("Mike",  STARTING_CASH, new BasicBot(25, 50)));
-        players.put("Eddie",  new Player("Eddie", STARTING_CASH, new BasicBot(50, 25)));
+        players.put("Joe", new Player("Joe", STARTING_CASH, new BasicBot(0, 75)));
+        players.put("Mike", new Player("Mike", STARTING_CASH, new BasicBot(25, 50)));
+        players.put("Eddie", new Player("Eddie", STARTING_CASH, new BasicBot(50, 25)));
 
-        table = new Table(TABLE_TYPE, BIG_BLIND);
+        /* The table. */
+        Table table = new Table(TABLE_TYPE, BIG_BLIND);
         for (Player player : players.values()) {
             table.addPlayer(player);
         }
-        
-        playerPanels = new HashMap<String, PlayerPanel>();
+
+        playerPanels = new HashMap<>();
         int i = 0;
         for (Player player : players.values()) {
             PlayerPanel panel = new PlayerPanel();

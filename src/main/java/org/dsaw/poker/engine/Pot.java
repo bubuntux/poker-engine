@@ -135,13 +135,13 @@ public class Pot {
         sb.append(String.valueOf(bet));
         sb.append(": {");
         boolean isFirst = true;
-        for (Player contributer : contributors) {
+        for (Player contributor : contributors) {
             if (isFirst) {
                 isFirst = false;
             } else {
                 sb.append(", ");
             }
-            sb.append(contributer.getName());
+            sb.append(contributor.getName());
         }
         sb.append('}');
         sb.append(" (Total: ");

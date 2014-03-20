@@ -69,7 +69,7 @@ public class AmountPanel extends JPanel implements ChangeListener, ActionListene
     public AmountPanel() {
         setBackground(UIConstants.TABLE_COLOR);
 
-        sliderAmounts = new HashMap<Integer, BigInteger>();
+        sliderAmounts = new HashMap<>();
 
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();

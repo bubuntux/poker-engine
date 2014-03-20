@@ -19,11 +19,7 @@ package org.dsaw.poker.engine;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
 import junit.framework.Assert;
-
-import org.dsaw.poker.engine.Card;
-import org.dsaw.poker.engine.Hand;
 import org.junit.Test;
 
 /**
@@ -72,13 +68,10 @@ public class HandTest {
      */
     @Test
     public void constructors() {
-        @SuppressWarnings("unused")
-        Hand hand = null;
-        
+
         // Null card array.
         try {
-            Card[] cards = null;
-            hand = new Hand(cards);
+            new Hand((Card[]) null);
             Assert.fail("No exception thrown");
         } catch (IllegalArgumentException e) {
             // OK.
@@ -87,7 +80,7 @@ public class HandTest {
         // Card array with a null card.
         try {
             Card[] cards = new Card[1];
-            hand = new Hand(cards);
+            new Hand(cards);
             Assert.fail("No exception thrown");
         } catch (IllegalArgumentException e) {
             // OK.
@@ -96,7 +89,7 @@ public class HandTest {
         // Card array with too many cards.
         try {
             Card[] cards = new Card[11];
-            hand = new Hand(cards);
+            new Hand(cards);
             Assert.fail("No exception thrown");
         } catch (IllegalArgumentException e) {
             // OK.
@@ -104,8 +97,7 @@ public class HandTest {
 
         // Null card collection.
         try {
-            Collection<Card> cards = null;
-            hand = new Hand(cards);
+            new Hand((Collection<Card>) null);
             Assert.fail("No exception thrown");
         } catch (IllegalArgumentException e) {
             // OK.
@@ -113,9 +105,9 @@ public class HandTest {
 
         // Card collection with a null card.
         try {
-            Collection<Card> cards = new ArrayList<Card>();
+            Collection<Card> cards = new ArrayList<>();
             cards.add(null);
-            hand = new Hand(cards);
+            new Hand(cards);
             Assert.fail("No exception thrown");
         } catch (IllegalArgumentException e) {
             // OK.
@@ -124,7 +116,7 @@ public class HandTest {
         // Card array with too many cards.
         try {
             Card[] cards = new Card[11];
-            hand = new Hand(cards);
+            new Hand(cards);
             Assert.fail("No exception thrown");
         } catch (IllegalArgumentException e) {
             // OK.

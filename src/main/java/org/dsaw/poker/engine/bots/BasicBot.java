@@ -130,7 +130,7 @@ public class BasicBot extends Bot {
     /** {@inheritDoc} */
     @Override
     public Action act(BigInteger minBet, BigInteger currentBet, Set<Action> allowedActions) {
-        Action action = null;
+        Action action;
         if (allowedActions.size() == 1) {
             // No choice, must check.
             action = Action.CHECK;
