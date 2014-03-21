@@ -23,19 +23,21 @@ GUI, with the human player playing against 3 bots.
 Usage
 -----
 
+```
 <repositories>
   <repository>
      <id>bubuntux-repo</id>
      <url>https://raw.github.com/bubuntux/mvn/repo/</url>
   </repository>
 </repositories>
-
+```
+```
 <dependency>
     <groupId>org.dsaw.poker</groupId>
     <artifactId>engine</artifactId>
     <version>1.0-SNAPSHOT</version>
 </dependency>
-
+```
 TODO....
 
 Building and running
