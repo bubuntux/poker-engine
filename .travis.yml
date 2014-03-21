@@ -1,7 +1,8 @@
 language: java
 jdk:
 - oraclejdk7
-script: mvn clean deploy
+install: true
+script: mvn clean deploy -B -V
 env:
   global:
     secure: Jx3x46cdQOmcC9yL7knrVRSQ5+V5lrc/cqH92FLFtiNkkYzgvT0gJarO8s8oyPZhNHey7jSzmBghySRbd0mebkcauFauBUiE9DHFRB/qMbkXf0d2nnW8v3tDKGj4IL+k3uny0uojaelKZoaJvh0M0S7BDqqDfwEkoc3lNTFz+Is=
