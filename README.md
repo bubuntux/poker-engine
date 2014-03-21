@@ -20,6 +20,23 @@ Status [![Build Status](https://travis-ci.org/bubuntux/poker-engine.png?branch=m
 The current implementation support the Fixed-Limit and No-Limit variants of the game with a Swing
 GUI, with the human player playing against 3 bots.
 
+Usage
+-----
+
+<repositories>
+  <repository>
+     <id>bubuntux-repo</id>
+     <url>https://raw.github.com/bubuntux/mvn/repo/</url>
+  </repository>
+</repositories>
+
+<dependency>
+    <groupId>org.dsaw.poker</groupId>
+    <artifactId>engine</artifactId>
+    <version>1.0-SNAPSHOT</version>
+</dependency>
+
+TODO....
 
 Building and running
 --------------------

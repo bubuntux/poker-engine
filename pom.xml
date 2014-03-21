@@ -101,12 +101,11 @@
                 <configuration>
                     <oauth2Token>${env.TOKEN}</oauth2Token>
                     <message>${project.groupId}:${project.artifactId}:${project.version} - Build ${env.TRAVIS_BUILD_NUMBER} ( ${ciManagement.url}/builds/${env.TRAVIS_BUILD_ID} )</message>
-                    <!--TODO-->
-                    <merge>false</merge>
+                    <merge>true</merge>
                     <noJekyll>true</noJekyll>
 
                     <repositoryOwner>bubuntux</repositoryOwner>
-                    <repositoryName>maven</repositoryName>
+                    <repositoryName>mvn</repositoryName>
                     <branch>refs/heads/repo</branch>
 
                     <outputDirectory>${built.repo.dir}</outputDirectory>
