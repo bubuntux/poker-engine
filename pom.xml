@@ -2,8 +2,8 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.dsaw.poker</groupId>
-    <artifactId>engine</artifactId>
+    <groupId>org.dsaw</groupId>
+    <artifactId>poker-engine</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -26,13 +26,25 @@
         </license>
     </licenses>
 
+    <issueManagement>
+        <url>https://github.com/bubuntux/poker-engine/issues</url>
+        <system>GitHub</system>
+    </issueManagement>
+
     <ciManagement>
         <url>https://travis-ci.org/bubuntux/poker-engine</url>
-        <system>travis-ci</system>
+        <system>Travis-CI</system>
     </ciManagement>
+
+    <scm>
+        <url>https://github.com/bubuntux/poker-engine</url>
+        <connection>scm:git:git://github.com/bubuntux/poker-engine.git</connection>
+        <developerConnection>scm:git:git@github.com:bubuntux/poker-engine.git</developerConnection>
+    </scm>
 
     <developers>
         <developer>
+            <id>bubuntux</id>
             <name>Julio Gutierrez</name>
             <email>bubuntux@gmail.com</email>
             <timezone>-6</timezone>
