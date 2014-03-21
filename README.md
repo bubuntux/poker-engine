@@ -33,8 +33,8 @@ Usage
 ```
 ```
 <dependency>
-    <groupId>org.dsaw.poker</groupId>
-    <artifactId>engine</artifactId>
+    <groupId>org.dsaw</groupId>
+    <artifactId>poker-engine</artifactId>
     <version>1.0-SNAPSHOT</version>
 </dependency>
 ```
