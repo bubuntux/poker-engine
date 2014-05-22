@@ -17,7 +17,7 @@
 
 package org.dsaw.poker.engine.actions;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 
 /**
  * The action of placing a bet.
@@ -32,7 +32,7 @@ public class BetAction extends Action {
      * @param amount
      *            The amount to bet.
      */
-    public BetAction(BigInteger amount) {
+    public BetAction(BigDecimal amount) {
         super("Bet", "bets", amount);
     }
     

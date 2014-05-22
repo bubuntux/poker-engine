@@ -17,7 +17,7 @@
 
 package org.dsaw.poker.engine.bots;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 import org.dsaw.poker.engine.Card;
@@ -85,7 +85,7 @@ public class BasicBot extends Bot {
 
     /** {@inheritDoc} */
     @Override
-    public void joinedTable(TableType type, BigInteger bigBlind, List<Player> players) {
+    public void joinedTable(TableType type, BigDecimal bigBlind, List<Player> players) {
         this.tableType = type;
     }
 
@@ -109,7 +109,7 @@ public class BasicBot extends Bot {
 
     /** {@inheritDoc} */
     @Override
-    public void boardUpdated(List<Card> cards, BigInteger bet, BigInteger pot) {
+    public void boardUpdated(List<Card> cards, BigDecimal bet, BigDecimal pot) {
         // Not implemented.
     }
 
@@ -129,7 +129,7 @@ public class BasicBot extends Bot {
 
     /** {@inheritDoc} */
     @Override
-    public Action act(BigInteger minBet, BigInteger currentBet, Set<Action> allowedActions) {
+    public Action act(BigDecimal minBet, BigDecimal currentBet, Set<Action> allowedActions) {
         Action action;
         if (allowedActions.size() == 1) {
             // No choice, must check.
@@ -159,7 +159,7 @@ public class BasicBot extends Bot {
                     } else if (aggression == 100) {
                         // Always go all-in!
                         //FIXME: Check and bet/raise player's remaining cash.
-                        BigInteger amount = (tableType == TableType.FIXED_LIMIT) ? minBet : minBet.multiply(BigInteger.TEN.multiply(BigInteger.TEN));
+                        BigDecimal amount = (tableType == TableType.FIXED_LIMIT) ? minBet : minBet.multiply(BigDecimal.TEN.multiply(BigDecimal.TEN));
                         if (allowedActions.contains(Action.BET)) {
                             action = new BetAction(amount);
                         } else if (allowedActions.contains(Action.RAISE)) {
@@ -170,7 +170,7 @@ public class BasicBot extends Bot {
                             action = Action.CHECK;
                         }
                     } else {
-                        BigInteger amount = minBet;
+                        BigDecimal amount = minBet;
                         if (tableType == TableType.NO_LIMIT) {
                             int betLevel = aggression / 20;
                             for (int i = 0; i < betLevel; i++) {

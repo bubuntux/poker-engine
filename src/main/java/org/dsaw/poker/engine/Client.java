@@ -17,7 +17,7 @@
 
 package org.dsaw.poker.engine;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 import org.dsaw.poker.engine.actions.Action;
@@ -51,7 +51,7 @@ public interface Client {
      * @param players
      *            The players at the table (including this player).
      */
-    void joinedTable(TableType type, BigInteger bigBlind, List<Player> players);
+    void joinedTable(TableType type, BigDecimal bigBlind, List<Player> players);
     
     /**
      * Handles the start of a new hand.
@@ -87,7 +87,7 @@ public interface Client {
      * @param pot
      *            The current pot.
      */
-    void boardUpdated(List<Card> cards, BigInteger bet, BigInteger pot);
+    void boardUpdated(List<Card> cards, BigDecimal bet, BigDecimal pot);
     
     /**
      * Handles the event of a player acting.
@@ -109,6 +109,6 @@ public interface Client {
      * 
      * @return The selected action.
      */
-    Action act(BigInteger minBet, BigInteger currentBet, Set<Action> allowedActions);
+    Action act(BigDecimal minBet, BigDecimal currentBet, Set<Action> allowedActions);
 
 }

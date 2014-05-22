@@ -17,7 +17,7 @@
 
 package org.dsaw.poker.engine;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.List;
 import org.dsaw.poker.engine.actions.Action;
 
@@ -42,13 +42,13 @@ public class Player {
     private final Hand hand;
 
     /** Current amount of cash. */
-    private BigInteger cash;
+    private BigDecimal cash;
 
     /** Whether the player has hole cards. */
     private boolean hasCards;
 
     /** Current bet. */
-    private BigInteger bet;
+    private BigDecimal bet;
 
     /** Last action performed. */
     private Action action;
@@ -63,7 +63,7 @@ public class Player {
      * @param client
      *            The client application.
      */
-    public Player(String name, BigInteger cash, Client client) {
+    public Player(String name, BigDecimal cash, Client client) {
         this.name = name;
         this.cash = cash;
         this.client = client;
@@ -95,8 +95,8 @@ public class Player {
      * Resets the player's bet.
      */
     public void resetBet() {
-        bet = BigInteger.ZERO;
-        action = (hasCards() && BigInteger.ZERO.equals(cash)) ? Action.ALL_IN : null;
+        bet = BigDecimal.ZERO;
+        action = (hasCards() && BigDecimal.ZERO.equals(cash)) ? Action.ALL_IN : null;
     }
 
     /**
@@ -138,7 +138,7 @@ public class Player {
      * 
      * @return The amount of cash.
      */
-    public BigInteger getCash() {
+    public BigDecimal getCash() {
         return cash;
     }
 
@@ -147,7 +147,7 @@ public class Player {
      * 
      * @return The current bet.
      */
-    public BigInteger getBet() {
+    public BigDecimal getBet() {
         return bet;
     }
     
@@ -157,7 +157,7 @@ public class Player {
      * @param bet
      *            The current bet.
      */
-    public void setBet(BigInteger bet) {
+    public void setBet(BigDecimal bet) {
         this.bet = bet;
     }
 
@@ -186,7 +186,7 @@ public class Player {
      * @return True if all-in, otherwise false.
      */
     public boolean isAllIn() {
-        return hasCards() && (BigInteger.ZERO.equals(cash));
+        return hasCards() && (BigDecimal.ZERO.equals(cash));
     }
 
     /**
@@ -204,7 +204,7 @@ public class Player {
      * @param blind
      *            The small blind.
      */
-    public void postSmallBlind(BigInteger blind) {
+    public void postSmallBlind(BigDecimal blind) {
         action = Action.SMALL_BLIND;
         cash = cash.subtract(blind);
         bet = bet.add(blind);
@@ -216,7 +216,7 @@ public class Player {
      * @param blind
      *            The big blind.
      */
-    public void postBigBlind(BigInteger blind) {
+    public void postBigBlind(BigDecimal blind) {
         action = Action.BIG_BLIND;
         cash = cash.subtract(blind);
         bet = bet.add(blind);
@@ -228,7 +228,7 @@ public class Player {
      * @param amount
      *            The amount of cash to pay.
      */
-    public void payCash(BigInteger amount) {
+    public void payCash(BigDecimal amount) {
         if (amount.compareTo(cash) > 0) {
             throw new IllegalStateException("Player asked to pay more cash than he owns!");
         }
@@ -241,7 +241,7 @@ public class Player {
      * @param amount
      *            The amount won.
      */
-    public void win(BigInteger amount) {
+    public void win(BigDecimal amount) {
         cash = cash.add(amount);
     }
 

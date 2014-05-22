@@ -19,7 +19,7 @@ package org.dsaw.poker.engine.gui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -49,10 +49,10 @@ public class Main extends JFrame implements Client {
     private static final TableType TABLE_TYPE = TableType.NO_LIMIT;
 
     /** The size of the big blind. */
-    private static final BigInteger BIG_BLIND = BigInteger.valueOf(10);
+    private static final BigDecimal BIG_BLIND = BigDecimal.valueOf(10);
 
     /** The starting cash per player. */
-    private static final BigInteger STARTING_CASH = BigInteger.valueOf(500);
+    private static final BigDecimal STARTING_CASH = BigDecimal.valueOf(500);
 
     /** The GridBagConstraints. */
     private final GridBagConstraints gc;
@@ -154,7 +154,7 @@ public class Main extends JFrame implements Client {
     }
 
     @Override
-    public void joinedTable(TableType type, BigInteger bigBlind, List<Player> players) {
+    public void joinedTable(TableType type, BigDecimal bigBlind, List<Player> players) {
         for (Player player : players) {
             PlayerPanel playerPanel = playerPanels.get(player.getName());
             if (playerPanel != null) {
@@ -184,7 +184,7 @@ public class Main extends JFrame implements Client {
     }
 
     @Override
-    public void boardUpdated(List<Card> cards, BigInteger bet, BigInteger pot) {
+    public void boardUpdated(List<Card> cards, BigDecimal bet, BigDecimal pot) {
         boardPanel.update(cards, bet, pot);
     }
 
@@ -216,7 +216,7 @@ public class Main extends JFrame implements Client {
     }
 
     @Override
-    public Action act(BigInteger minBet, BigInteger currentBet, Set<Action> allowedActions) {
+    public Action act(BigDecimal minBet, BigDecimal currentBet, Set<Action> allowedActions) {
         boardPanel.setMessage("Please select an action:");
         return controlPanel.getUserInput(minBet, humanPlayer.getCash(), allowedActions);
     }

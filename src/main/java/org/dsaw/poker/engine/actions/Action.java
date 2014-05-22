@@ -17,7 +17,7 @@
 
 package org.dsaw.poker.engine.actions;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 
 /**
  * Player action.
@@ -30,7 +30,7 @@ public abstract class Action {
     public static final Action ALL_IN = new AllInAction();
 
     /** Bet. */
-    public static final Action BET = new BetAction(BigInteger.ZERO);
+    public static final Action BET = new BetAction(BigDecimal.ZERO);
     
     /** Posting the big blind. */
     public static final Action BIG_BLIND = new BigBlindAction();
@@ -48,7 +48,7 @@ public abstract class Action {
     public static final Action FOLD = new FoldAction();
     
     /** Raise. */
-    public static final Action RAISE = new RaiseAction(BigInteger.ZERO);
+    public static final Action RAISE = new RaiseAction(BigDecimal.ZERO);
     
     /** Posting the small blind. */
     public static final Action SMALL_BLIND = new SmallBlindAction();
@@ -60,7 +60,7 @@ public abstract class Action {
     private final String verb;
     
     /** The amount (if appropriate). */
-    private final BigInteger amount;
+    private final BigDecimal amount;
 
     /**
      * Constructor.
@@ -71,7 +71,7 @@ public abstract class Action {
      *            The action's verb.
      */
     public Action(String name, String verb) {
-        this(name, verb, BigInteger.ZERO);
+        this(name, verb, BigDecimal.ZERO);
     }
     
     /**
@@ -84,7 +84,7 @@ public abstract class Action {
      * @param amount
      *            The action's amount.
      */
-    public Action(String name, String verb, BigInteger amount) {
+    public Action(String name, String verb, BigDecimal amount) {
         this.name = name;
         this.verb = verb;
         this.amount = amount;
@@ -113,7 +113,7 @@ public abstract class Action {
      * 
      * @return The action's amount.
      */
-    public final BigInteger getAmount() {
+    public final BigDecimal getAmount() {
         return amount;
     }
     

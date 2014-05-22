@@ -17,25 +17,29 @@
 
 package org.dsaw.poker.engine.gui;
 
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import org.dsaw.poker.engine.actions.Action;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.HashMap;
-import org.dsaw.poker.engine.actions.Action;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  * Panel for selecting the amount to bet or raise.
- * 
+ *
  * @author Oscar Stigter
  */
 public class AmountPanel extends JPanel implements ChangeListener, ActionListener {
-    
-    /** Serial version UID. */
-    private static final long serialVersionUID = 171860711156799253L;
+
+  /**
+   * Serial version UID.
+   */
+  private static final long serialVersionUID = 171860711156799253L;
 
     /** Number of increasing amounts to choose from (ticks on slider bar). */
     private static final int NO_OF_TICKS = 10;
@@ -45,27 +49,29 @@ public class AmountPanel extends JPanel implements ChangeListener, ActionListene
 
     /** Label with selected amount. */
     private final JLabel amountLabel;
-    
-    /** Bet/Raise button. */
-    private final JButton betRaiseButton;
-    
-    /** Cancel button. */
-    private final JButton cancelButton;
-    
-    /** Incremental bet amounts mapped to slider's index. */
-    private final HashMap<Integer, BigInteger> sliderAmounts;
 
-    /** Monitor while waiting for user input. */
+  /** Bet/Raise button. */
+    private final JButton betRaiseButton;
+
+  /** Cancel button. */
+    private final JButton cancelButton;
+
+  /**
+   * Incremental bet amounts mapped to slider's index.
+   */
+  private final HashMap<Integer, BigDecimal> sliderAmounts;
+
+  /** Monitor while waiting for user input. */
     private final Object monitor = new Object();
-    
-    private Action defaultAction;
-    
-    /** The selected action. */
+
+  private Action defaultAction;
+
+  /** The selected action. */
     private Action selectedAction;
-    
-    /**
-     * Constructor.
-     */
+
+  /**
+   * Constructor.
+   */
     public AmountPanel() {
         setBackground(UIConstants.TABLE_COLOR);
 
@@ -73,8 +79,8 @@ public class AmountPanel extends JPanel implements ChangeListener, ActionListene
 
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        
-        amountSlider = new JSlider();
+
+      amountSlider = new JSlider();
         amountSlider.setBackground(UIConstants.TABLE_COLOR);
         amountSlider.setMajorTickSpacing(1);
         amountSlider.setMinorTickSpacing(1);
@@ -104,8 +110,8 @@ public class AmountPanel extends JPanel implements ChangeListener, ActionListene
         gbc.fill = GridBagConstraints.NONE;
         gbc.insets = new Insets(5, 0, 5, 0);
         add(amountLabel, gbc);
-        
-        betRaiseButton = new JButton("Bet");
+
+      betRaiseButton = new JButton("Bet");
         betRaiseButton.addActionListener(this);
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -117,8 +123,8 @@ public class AmountPanel extends JPanel implements ChangeListener, ActionListene
         gbc.fill = GridBagConstraints.NONE;
         gbc.insets = new Insets(0, 0, 0, 0);
         add(betRaiseButton, gbc);
-        
-        cancelButton = new JButton("Cancel");
+
+      cancelButton = new JButton("Cancel");
         cancelButton.addActionListener(this);
         gbc.gridx = 1;
         gbc.gridy = 2;
@@ -131,29 +137,29 @@ public class AmountPanel extends JPanel implements ChangeListener, ActionListene
         gbc.insets = new Insets(0, 0, 0, 0);
         add(cancelButton, gbc);
     }
-    
-    /**
+
+  /**
      * Resets and shows the panel.
-     * 
-     * @param defaultAction
+   *
+   * @param defaultAction
      *            The default action.
      * @param minBet
      *            The minimum bet.
      * @param maxBet
      *            The maximum bet.
-     * 
-     * @return The selected action.
-     */
-    public Action show(Action defaultAction, BigInteger minBet, BigInteger maxBet) {
-        this.defaultAction = defaultAction;
+   *
+   * @return The selected action.
+   */
+  public Action show(Action defaultAction, BigDecimal minBet, BigDecimal maxBet) {
+    this.defaultAction = defaultAction;
         betRaiseButton.setText(defaultAction.getName());
         selectedAction = null;
-        
-        // Determine incremental amounts on slider bar.
+
+    // Determine incremental amounts on slider bar.
         sliderAmounts.clear();
         int noOfValues = 0;
-        BigInteger value = minBet;
-        while (value.compareTo(maxBet) < 0 && noOfValues < (NO_OF_TICKS - 1)) {
+    BigDecimal value = minBet;
+    while (value.compareTo(maxBet) < 0 && noOfValues < (NO_OF_TICKS - 1)) {
             sliderAmounts.put(noOfValues, value);
             noOfValues++;
             value = value.add(value);
@@ -162,8 +168,8 @@ public class AmountPanel extends JPanel implements ChangeListener, ActionListene
         amountSlider.setMinimum(0);
         amountSlider.setMaximum(noOfValues);
         amountSlider.setValue(0);
-        
-        // Wait for the user to select an amount or cancel.
+
+    // Wait for the user to select an amount or cancel.
         synchronized (monitor) {
             try {
                 monitor.wait();
@@ -171,17 +177,17 @@ public class AmountPanel extends JPanel implements ChangeListener, ActionListene
                 // Ignore.
             }
         }
-        
-        return selectedAction;
+
+    return selectedAction;
     }
-    
-    /**
+
+  /**
      * Returns the selected amount.
-     * 
-     * @return The selected amount.
-     */
-    public BigInteger getAmount() {
-        int index = amountSlider.getValue();
+   *
+   * @return The selected amount.
+   */
+  public BigDecimal getAmount() {
+    int index = amountSlider.getValue();
         return sliderAmounts.get(index);
     }
 
@@ -189,8 +195,8 @@ public class AmountPanel extends JPanel implements ChangeListener, ActionListene
     @Override
     public void stateChanged(ChangeEvent e) {
         int index = amountSlider.getValue();
-        BigInteger amount = sliderAmounts.get(index);
-        amountLabel.setText(String.format("$ %d", amount));
+      BigDecimal amount = sliderAmounts.get(index);
+      amountLabel.setText(String.format("$ %f", amount.doubleValue()));
     }
 
     /** {@inheritDoc} */
@@ -201,10 +207,10 @@ public class AmountPanel extends JPanel implements ChangeListener, ActionListene
         } else if (e.getSource() == cancelButton) {
             selectedAction = null;
         }
-        
-        synchronized (monitor) {
+
+      synchronized (monitor) {
             monitor.notifyAll();
-        }
+      }
     }
-    
+
 }

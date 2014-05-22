@@ -20,7 +20,7 @@ package org.dsaw.poker.engine.gui;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 import org.dsaw.poker.engine.TableType;
@@ -97,7 +97,7 @@ public class ControlPanel extends JPanel implements ActionListener {
         });
         Set<Action> allowedActions = new HashSet<>();
         allowedActions.add(Action.CONTINUE);
-        getUserInput(BigInteger.ZERO, BigInteger.ZERO, allowedActions);
+        getUserInput(BigDecimal.ZERO, BigDecimal.ZERO, allowedActions);
     }
     
     /**
@@ -113,7 +113,7 @@ public class ControlPanel extends JPanel implements ActionListener {
      * 
      * @return The selected action.
      */
-    public Action getUserInput(BigInteger minBet, BigInteger cash, final Set<Action> allowedActions) {
+    public Action getUserInput(BigDecimal minBet, BigDecimal cash, final Set<Action> allowedActions) {
         selectedAction = null;
         while (selectedAction == null) {
             // Show the buttons for the allowed actions.

@@ -19,7 +19,7 @@ package org.dsaw.poker.engine.gui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.List;
 import org.dsaw.poker.engine.Card;
 
@@ -166,7 +166,7 @@ public class BoardPanel extends JPanel {
         
         setPreferredSize(new Dimension(400, 270));
 
-        update(null, BigInteger.ZERO, BigInteger.ZERO);
+        update(null, BigDecimal.ZERO, BigDecimal.ZERO);
     }
     
     /**
@@ -177,13 +177,13 @@ public class BoardPanel extends JPanel {
      * @param pot
      *            The pot.
      */
-    public void update(List<Card> cards, BigInteger bet, BigInteger pot) {
-        if (BigInteger.ZERO.equals(bet)) {
+    public void update(List<Card> cards, BigDecimal bet, BigDecimal pot) {
+        if (BigDecimal.ZERO.equals(bet)) {
             betLabel.setText(" ");
         } else {
             betLabel.setText("$ " + bet);
         }
-        if (BigInteger.ZERO.equals(pot)) {
+        if (BigDecimal.ZERO.equals(pot)) {
             potLabel.setText(" ");
         } else {
             potLabel.setText("$ " + pot);

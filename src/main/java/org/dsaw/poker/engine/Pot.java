@@ -17,7 +17,7 @@
 
 package org.dsaw.poker.engine;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -34,7 +34,7 @@ import java.util.Set;
 public class Pot {
 
     /** Bet for this pot. */
-    private BigInteger bet;
+    private BigDecimal bet;
 
     /** Contributing players to this pot. */
     public final Set<Player> contributors;
@@ -45,7 +45,7 @@ public class Pot {
      * @param bet
      *            The bet for this pot.
      */
-    public Pot(BigInteger bet) {
+    public Pot(BigDecimal bet) {
         this.bet = bet;
         contributors = new HashSet<>();
     }
@@ -55,7 +55,7 @@ public class Pot {
      * 
      * @return The bet.
      */
-    public BigInteger getBet() {
+    public BigDecimal getBet() {
         return bet;
     }
     
@@ -95,8 +95,8 @@ public class Pot {
      * 
      * @return The total value.
      */
-    public BigInteger getValue() {
-        return bet.multiply(new BigInteger(String.valueOf(contributors.size()))); //TODO??
+    public BigDecimal getValue() {
+        return bet.multiply(new BigDecimal(String.valueOf(contributors.size()))); //TODO??
     }
 
     /**
@@ -110,7 +110,7 @@ public class Pot {
      * 
      * @return The other pot, with the remainder.
      */
-    public Pot split(Player player, BigInteger partialBet) {
+    public Pot split(Player player, BigDecimal partialBet) {
         Pot pot = new Pot(bet.subtract(partialBet));
         for (Player contributer : contributors) {
             pot.addContributer(contributer);
@@ -124,7 +124,7 @@ public class Pot {
      * Clears this pot.
      */
     public void clear() {
-        bet = BigInteger.ZERO;
+        bet = BigDecimal.ZERO;
         contributors.clear();
     }
 
