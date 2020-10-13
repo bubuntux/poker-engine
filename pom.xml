@@ -15,7 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.7</java.version>
         <!--TODO change to test-ng-->
-        <junit.version>4.8</junit.version>
+        <junit.version>4.13.1</junit.version>
         <built.repo.dir>${project.build.directory}/mvn-repo</built.repo.dir>
     </properties>
 
